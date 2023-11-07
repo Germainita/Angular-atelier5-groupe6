@@ -48,6 +48,11 @@ export class ContactComponent implements OnInit {
   choice : boolean = true;
   found: boolean = false;
 
+  //valeur du filter qui correspond a celui du champs recherche
+  filterValue = '';
+
+  //les element trouver
+  filteredElement:any;
 
   // Constructeur de la classe 
   constructor(private route: ActivatedRoute) {}
@@ -61,14 +66,35 @@ export class ContactComponent implements OnInit {
     // console.log(this.tabUsers)
     // console.log(this.tabUsers[this.idContactUser-1]);
 
-    this.userFound = this.tabUsers[this.idContactUser-1];
+    this.userFound = this.tabUsers.find((element:any) =>element.idUser == this.idContactUser);
+    // this.userFound = this.tabUsers[this.idContactUser-1];
     this.contactsUserFound = this.userFound.contacts;
     console.log(this.contactsUserFound);
-    // console.log(this.userFound);
 
-    console.log("Avant vidange"); 
-    console.log(this.userFound.contacts)
+    //assigner la liste des contacts a notre variable element filtrer 
+    this.filteredElement = this.contactsUserFound;
   }
+
+  //fonction pour filtrer
+// filterByTitle(){
+//   if (!this.filterValue) {
+//     this.filteredElement = this.contactsUserFound;
+//   }
+
+//   this.filteredElement = this.contactsUserFound.filter(
+//     (elt:any) => (elt?.nomContact.toLowerCase().includes(this.filterValue.toLowerCase())) || elt?.prenomContact.toLowerCase().includes(this.filterValue.toLowerCase())
+//   );
+// }
+
+
+  // Methode de recherche automatique 
+  onSearch(){
+    // Recherche se fait selon le nom ou le prenom 
+    this.filteredElement = this.contactsUserFound.filter(
+      (elt:any) => (elt?.nomContact.toLowerCase().includes(this.filterValue.toLowerCase())) || elt?.prenomContact.toLowerCase().includes(this.filterValue.toLowerCase())
+    );
+  }
+
 
   // Methode pour uploader le fichier image 
   // uploadFile(event: Event) {
@@ -97,7 +123,8 @@ export class ContactComponent implements OnInit {
     }
     
     // Si toutes les vérifications sont valdes on crée le compte
-    else { 
+    else {
+      // On récupère le dernier element du tableau  
       let contactUser = {
         idContact: this.userFound.contacts.length +1,
         nomContact: this.nom,

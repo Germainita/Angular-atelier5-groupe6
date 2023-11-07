@@ -11,14 +11,14 @@
             </div>
     
             <div class="input-group">
-                <input type="text" name="search" class="form-control">
-                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" name="filterValue" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()">
+                <button class="input-group-text notactive"><i class="bi bi-search"></i></button>
             </div>
     
         </div>
     
         <!-- La liste des contacts  -->
-        <div class="list-contact" *ngFor="let contactUserFound of contactsUserFound ">
+        <div class="list-contact" *ngFor="let contactUserFound of filteredElement ">
             <div *ngIf="contactUserFound.etatContact == 1">
                 <div class="card mb-5 shadow-sm ">
                     <div class="circle-start circle-active "></div>
@@ -47,7 +47,7 @@
                         <p class="end circle-deseable"></p>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
 
         <!-- Pagination  -->
@@ -71,14 +71,14 @@
             </div>
     
             <div class="input-group">
-                <input type="text" name="filterValue" class="form-control" >
-                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" name="filterValue" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()">
+                <button class="input-group-text notactive"><i class="bi bi-search"></i></button>
             </div>
     
         </div>
     
         <!-- La liste des contacts  de la corbeille -->
-        <div class="list-contact" *ngFor="let contactUserFound of contactsUserFound ">
+        <div class="list-contact" *ngFor="let contactUserFound of filteredElement ">
             <div *ngIf="contactUserFound.etatContact == 0">
                 <div class="card mb-5 shadow ">
                     <div class="circle-start active"></div>
